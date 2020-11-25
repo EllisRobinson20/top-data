@@ -26,7 +26,7 @@ function addUserIfExists(user) {
 		socialnetworkDB.createUser(
 		{
 			user: user,
-			pwd: "%P@55w0rd",
+			pwd: "password",
 			roles: ["readWrite", "dbAdmin"/*,"readWriteAnyDatabase","dbAdminAnyDatabase","clusterAdmin"*/ ]
 		})
 	} else {
