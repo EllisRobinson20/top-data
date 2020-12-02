@@ -1,0 +1,11 @@
+mongo- we need to be able to add more users to the existing database without removing existing users. an add_users.js
+
+could also create another script to add to pick a random user, check if they have no users, then add a random number of users.
+If they have users, reciprocate some of those users
+Then out of reciprocated users, create a random number of lorem ipsum messages between them
+
+then functionality. we want to be able to add one or many users. perhaps and  arraylist of arrays, each array adds a user with the arbitrary datails passed into the array as arguments.
+then a add_friend.js, takes in two users, first one is the requester the other is the recipient
+then send_message.js, this script takes two users plus the message to be sent.
+
+Some notes in local assignment folder for the readme on how to user the scripts properly

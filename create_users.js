@@ -17,7 +17,7 @@ for (var i=0;i<=userBase;i++) {
 		profileObject = createProfileObject()
 		userObject = {"username":userName,"firstname":firstName,"surname":surname, "password":firstName+"2020", "profile":{profileObject}}
 		userObjectArray.push(userObject)
-		db.Members.ensureIndex({userName: 1}, {unique: true});
+		db.Members.ensureIndex({userName: 1}, {unique: true}); //may need to change to create index: https://docs.mongodb.com/manual/reference/method/db.collection.createIndex/#db.collection.createIndex
 		printjson(db.Members.getIndexes()) 
 	}
 }
