@@ -2,11 +2,12 @@ mongo = Mongo('localhost');
 db = mongo.getDB('social_network')
 //alter user base to add more users
 //don forget!! must call: "mongo first-names.json create_users.js" in command line
-userBase = 1000
+userBase = 100
 months = ["january","february","march","april","may,","june","july","august","september","october","november","december"]
 userObject = {}
 userObjectArray = []
 profileObject = {}
+friendsObject = {}
 for (var i=0;i<=userBase;i++) {
 	var firstName = names[Math.floor(Math.random() * names.length)]
 	var surname = names[Math.floor(Math.random() * names.length)]
@@ -15,7 +16,7 @@ for (var i=0;i<=userBase;i++) {
 	 
 	if (userName || userName != null) {
 		profileObject = createProfileObject()
-		userObject = {"username":userName,"firstname":firstName,"surname":surname, "password":firstName+"2020", "profile":{profileObject}}
+		userObject = {"username":userName,"firstname":firstName,"surname":surname, "password":firstName+"2020", "profile":{profileObject}, "friends":[]}
 		userObjectArray.push(userObject)
 		db.Members.ensureIndex({userName: 1}, {unique: true}); //may need to change to create index: https://docs.mongodb.com/manual/reference/method/db.collection.createIndex/#db.collection.createIndex
 		printjson(db.Members.getIndexes()) 

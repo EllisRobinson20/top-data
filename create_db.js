@@ -2,7 +2,7 @@ mongo = Mongo('localhost');
 //Create DB
 socialnetworkDB = mongo.getDB('social_network');
 admins_array = ["lee", "james", "lucy"];
-collections_array = ["Usernames", "Members", "Friends", "Messages"];
+collections_array = ["Usernames", "Members", "Messages"];
 users = hasUsers = socialnetworkDB.getUsers()
 collections = hasCollections = socialnetworkDB.getCollectionNames();
 // remove existing users if already exist
