@@ -1,0 +1,3 @@
+mongo ~/top-data/create_db.js
+mongo ~/top-data/first-names.json ~/top-data/create_users.js
+mongo ~/top-data/message-templates.json ~/top-data/test_data.js

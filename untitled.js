@@ -41,22 +41,39 @@ cursor.forEach(function(member) {
 	usersFriends = member.friends
 	var friends = usersFriends.map(function(friend) {return friend}) // change to an array to be able to call for each
 		friends.forEach(function(friend) {
+			
 			member.messageThreads.forEach(function(message){
 				//print(message.friend_username == friend.username)
-				if (message.friend_username == friend.username) {
+				if (message.friend_username === friend.username) {
 					//append the array
-				}
+					message.message_context.push(message.message_context)
+					print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+					printjson(message)
+					membersColl.update({
+				username: user.username
+			},{
+				$push: {
+					message_context}})
+				} 
 			})
 			
-			//var friendContextExsists = membersColl.find({$and:[{"messageThreads.thread_id": friend.id}, {"messageThreads.thread_id": friend}] })		
-			membersColl.update({
+			//var friendContextExsists = membersColl.find({$and:[{"messageThreads.thread_id": friend.id}, {"messageThreads.thread_id": friend}] })	
+			//createMessageContext()	
+			function createMessageContext() {
+				membersColl.update({
 				username: user.username
 			},{
 				$push: {
 					messageThreads: {$each:[{'thread_id':friend.id, 'friend_username':friend.username, 'date_added':date, 'message_context':[messages[randomNumber(0,48)]]}]}}})
+				
+			}
+			
 		})	
+		printjson(user.messageThreads)
 })
-
+print("<<<<<<<<<<<<<<<<< users are: >>>>>>>>>>>>>>>>>>>>>>")
+printjson(user)
+print("<<<<<<<<<<<<<<<<< threads are: >>>>>>>>>>>>>>>>>>>>>>")
 }
 function getDateTime(){
 	var currentdate = new Date(); 
