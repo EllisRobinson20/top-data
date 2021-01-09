@@ -74,6 +74,7 @@ function checkUniqueUser(firstName, surname, userHandle) {
 	}	
 
 
+
 /*function randomDate(start, end) {
   var date = new Date(+start + Math.random() * (end - start));
   return date;
