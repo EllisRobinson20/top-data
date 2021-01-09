@@ -1,0 +1,67 @@
+{
+	"$schema": "http://social_network.co/schema",
+	"title": "Members",
+	"description": "collection of current Member objects",
+	"type": "object",
+	"required": ["username","email","password"],
+	"properties": {
+		"username": {"description":"Unique ID","type":"string", "minLength":4},
+		"email":{"type":"string","format":"email"},
+		"firstname": {"type":"string","minLength":2},
+		"surname": {"type":"string","minLength":2},
+		"password": {"type":"string", "minLength":8, "maxLength":30},
+		"profile":{
+			"about":{"description":"Description about the user","type":"string"},
+			"age":{"type":"number","minimum":13},
+			"dayOfBirth":{"type":"number","minimum":1},
+			"monthOfBirth":{"enum":["January","February","March","April","May","June","July","August","September","October","November","December"]},
+			"yearOfBirth":{"type":"number"},
+			"gender":{"enum":["male","female","prefer not to say"]}
+		},
+		"friends":{
+			"type":"array",
+			"items": [
+				{
+					"friendsObject":{
+						"description":"users friends object inside an array",
+						"type":"object",
+						"properties":{
+							"id":{"description":"the id of the friend"},
+							"username":{"description":"username of friend","type":"string","minLength":4},
+							"name":{"description":"name of friend","type":"string","minLength":2},
+							"date_added":{"description":"the date the friend was added to friends list", "type":"string"},
+							"reciprocated":{"description":"if true the friend has added user in return", "type":"boolean"}
+						}
+					}
+
+				}
+			]
+		},
+		"messageThreads":{
+			"type":"array",
+			"items": [
+				{
+					"messageObject":{
+						"description":"object to store messages between user and friends",
+						"type":"object",
+						"properties":{
+							"thread_id":{"description":"id of the friend assigned as the thread id", "type":"string"},
+							"friend_username":{"description":"username of the friend in this context","type":"string","minLength":4},
+							"message_context":{"description":" the message body", "type":"string"}
+						}
+					}
+				}
+			]
+		}
+	}
+}
+{
+	"$schema":"http://social_network.co.schema",
+	"title":"Usernames",
+	"description": "collection of current usernames to ensure unique uers handles",
+	"type": "object",
+	"properties":{
+		"username":{"description":"existing userhandle", "type":"string"}
+	}
+}
+

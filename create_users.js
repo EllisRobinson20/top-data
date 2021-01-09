@@ -17,7 +17,7 @@ for (var i=0;i<=userBase;i++) {
 	 
 	if (userName || userName != null) {
 		profileObject = createProfileObject()
-		userObject = {"username":userName,"firstname":firstName,"surname":surname, "password":firstName+"2020", "profile":{profileObject}, "friends":[], "messageThreads":[]}
+		userObject = {"username":userName, "email": userName+"gmail.com", "firstname":firstName,"surname":surname, "password":firstName+"2020", "profile":{profileObject}, "friends":[], "messageThreads":[]}
 		userObjectArray.push(userObject)
 		db.Members.ensureIndex({userName: 1}, {unique: true}); //may need to change to create index: https://docs.mongodb.com/manual/reference/method/db.collection.createIndex/#db.collection.createIndex
 		printjson(db.Members.getIndexes()) 
@@ -49,7 +49,6 @@ function createProfileObject() {
 	print(DOB)
 	userObject =  {
 			"about":"Description about the user",
-			"email": userName+"gmail.com",
 			"age":age,
 			"dayOfBirth":dayOfBirth,
 			"monthOfBirth":monthOfBirth,
@@ -69,6 +68,7 @@ function checkUniqueUser(firstName, surname, userHandle) {
 	} else {
 		print("user name check ok: ")
 		print(userName)
+		userCollection.insert(userName)
 		return userName
 		}
 	}	

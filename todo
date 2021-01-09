@@ -11,3 +11,5 @@ then send_message.js, this script takes two users plus the message to be sent.
 Some notes in local assignment folder for the readme on how to user the scripts properly
 
 There hasnet been any indexes set on the documents except for the members document
+
+Replication and sharding to be done 
