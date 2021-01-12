@@ -1,12 +1,11 @@
 mongo = Mongo('localhost');
 db = mongo.getDB('social_network')
-//alter user base to add more users
-//don forget!! must call: "mongo first-names.json create_users.js" in command line
+
 userBase = 10
 months = ["january","february","march","april","may,","june","july","august","september","october","november","december"]
 userObject = {}
 userObjectArray = []
-profileObject = {}
+profile = {}
 friendsObject = {}
 messageThreads = []
 for (var i=0;i<=userBase;i++) {
@@ -16,8 +15,8 @@ for (var i=0;i<=userBase;i++) {
 	var userName = checkUniqueUser(firstName,surname,userHandle)
 	 
 	if (userName || userName != null) {
-		profileObject = createProfileObject()
-		userObject = {"username":userName, "email": userName+"gmail.com", "firstname":firstName,"surname":surname, "password":firstName+"2020", "profile":{profileObject}, "friends":[], "messageThreads":[]}
+		profile = createProfileObject()
+		userObject = {"username":userName,"firstname":firstName,"surname":surname, "password":firstName+"2020", profile, "friends":[], "messages":[]}
 		userObjectArray.push(userObject)
 		db.Members.ensureIndex({userName: 1}, {unique: true}); //may need to change to create index: https://docs.mongodb.com/manual/reference/method/db.collection.createIndex/#db.collection.createIndex
 		printjson(db.Members.getIndexes()) 
@@ -26,6 +25,10 @@ for (var i=0;i<=userBase;i++) {
 printjson(userObjectArray)
 db.Members.drop()
 db.Members.insert(userObjectArray);
+userObjectArray.forEach(function(user){
+	var r =db.Usernames.insert({username:user.username}) 
+	print(r)
+})
 cursor = db.Members.find()
 cursor = cursor.toArray()
 cursor.forEach(member => print(JSON.stringify(member,null,2)) )
@@ -49,6 +52,7 @@ function createProfileObject() {
 	print(DOB)
 	userObject =  {
 			"about":"Description about the user",
+			"email": userName+"@gmail.com",
 			"age":age,
 			"dayOfBirth":dayOfBirth,
 			"monthOfBirth":monthOfBirth,
@@ -58,8 +62,21 @@ function createProfileObject() {
 	return userObject
 
 }
+function checkLength(firstName, surname, userHandle) {
+		userName =  firstName+surname+userHandle
+		if (firstName.length+surname.length>16) {
+		print("name too long; "+ firstName)
+		var f = firstName.split("")
+		var newFirst = f[0]
+		print("Taking users initial: "+f[0])
+		checkLength(newFirst,surname,userHandle)
+	} else {
+		print("username size ok: " +userName)
+		return userName
+	}
+	}
 function checkUniqueUser(firstName, surname, userHandle) {
-	userName = firstName+surname+userHandle
+	userName = checkLength(firstName,surname,userHandle)
 	userCollection = db.getCollection("Usernames");
 	if (userCollection.find({handle:userName}) === userName) {
 		print("exists")
@@ -68,14 +85,7 @@ function checkUniqueUser(firstName, surname, userHandle) {
 	} else {
 		print("user name check ok: ")
 		print(userName)
-		userCollection.insert(userName)
 		return userName
 		}
 	}	
 
-
-
-/*function randomDate(start, end) {
-  var date = new Date(+start + Math.random() * (end - start));
-  return date;
-}*/
